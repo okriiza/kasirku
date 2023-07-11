@@ -29,7 +29,7 @@
                <?php
                $bulan_now =  date('y-m-d');
                ?>
-               <?php $ambil = $koneksi->query("SELECT CONCAT(YEAR(tanggal_transaksi),'/',MONTH(tanggal_transaksi)), SUM(grandtotal) AS total FROM transaksi WHERE CONCAT(YEAR(tanggal_transaksi),'/',MONTH(tanggal_transaksi)) = CONCAT(YEAR(NOW()),'/',MONTH(NOW())) GROUP BY YEAR(tanggal_transaksi),MONTH(tanggal_transaksi)"); ?>
+               <?php $ambil = $koneksi->query("SELECT CONCAT(YEAR(tanggal_transaksi),'/',MONTH(tanggal_transaksi)), SUM(grandtotal) AS total FROM transaksi WHERE CONCAT(YEAR(tanggal_transaksi),'/',MONTH(tanggal_transaksi)) = CONCAT(YEAR(NOW()),'/',MONTH(NOW())) GROUP BY CONCAT(YEAR(tanggal_transaksi),'/',MONTH(tanggal_transaksi))"); ?>
                <?php $pecah = mysqli_fetch_array($ambil); ?>
                <h3 class="info-box-number">Rp. <?php echo  number_format($pecah['total'], 0, ".", "."); ?></h3>
                <div class="progress">
@@ -90,16 +90,18 @@
                      <?php
                      $daynow = date("Y-m-d");
                      $nomor = 1;
-                     $query = "SELECT sum(jumlah_pembelian) AS qtyy,nama_barang,ukuran,kode,tanggal_transaksi,id_barang FROM transaksi_detail JOIN transaksi ON transaksi.id=transaksi_detail.id_transaksi WHERE tanggal_transaksi='$daynow' GROUP BY id_barang ORDER BY qtyy DESC LIMIT 5";
+                     $query = "SELECT sum(jumlah_pembelian) AS qtyy, nama_barang, ukuran, kode, tanggal_transaksi, id_barang FROM transaksi_detail JOIN transaksi ON transaksi.id = transaksi_detail.id_transaksi WHERE tanggal_transaksi = '$daynow' GROUP BY id_barang, nama_barang, ukuran, kode, tanggal_transaksi ORDER BY qtyy DESC LIMIT 5";
                      $ambil = $koneksi->query($query);
-                     while ($pecah = mysqli_fetch_array($ambil)) {;
+                     while ($pecah = mysqli_fetch_array($ambil)) {
                      ?>
                         <tr>
                            <td align="center"><?php echo $nomor++; ?></td>
-                           <td><?php echo $pecah['nama_barang']; ?> <?php echo $pecah['ukuran']; ?> <?php echo $pecah['kode']; ?></td>
+                           <td><?php echo $pecah['nama_barang'] . ' ' . $pecah['ukuran'] . ' ' . $pecah['kode']; ?></td>
                            <td align="center"><span class="badge bg-success"><?php echo $pecah['qtyy']; ?></span></td>
                         </tr>
-                     <?php }; ?>
+                     <?php } ?>
+
+
                   </tbody>
                </table>
             </div>

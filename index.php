@@ -1,5 +1,5 @@
 <?php
-error_reporting(0);
+error_reporting(1);
 include 'koneksi.php';
 if (!isset($_SESSION)) {
    session_start();
@@ -27,7 +27,7 @@ if (!isset($_SESSION['admin'])) {
    <link rel="stylesheet" href="assets/plugins/datatables-bs4/css/dataTables.bootstrap4.css">
    <link rel="stylesheet" href="assets/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">
    <link rel="stylesheet" href="assets/plugins/toastr/toastr.min.css">
-   <link rel="stylesheet" href="assets/dist/css/select2.min.css"  />
+   <link rel="stylesheet" href="assets/dist/css/select2.min.css" />
 
    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
 </head>

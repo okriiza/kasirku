@@ -37,11 +37,20 @@
                         </tr>
                      </thead>
                      <tbody>
-                        <?php $nomor = 1; ?>
-                        <?php $ambil = $koneksi->query("SELECT *,transaksi.id AS transaksi_id, transaksi.subtotal AS subtotaltransaksi, transaksi_detail.subtotal AS subtotalbarang FROM transaksi JOIN transaksi_detail ON transaksi.id = transaksi_detail.id_transaksi JOIN admin ON admin.id = transaksi.id_kasir WHERE transaksi.id GROUP BY transaksi.id ORDER BY transaksi.id DESC"); ?>
-                        <?php while ($pecah = $ambil->fetch_assoc()) { ?>
+                        <?php
+                        $nomor = 1;
+                        $query = "SELECT *, transaksi.id AS transaksi_id, transaksi.subtotal AS subtotaltransaksi, transaksi_detail.subtotal AS subtotalbarang 
+          FROM transaksi 
+          JOIN transaksi_detail ON transaksi.id = transaksi_detail.id_transaksi 
+          JOIN admin ON admin.id = transaksi.id_kasir 
+          WHERE transaksi.id 
+          GROUP BY transaksi.id, transaksi_detail.id
+          ORDER BY transaksi.id DESC";
+                        $ambil = $koneksi->query($query);
+                        while ($pecah = $ambil->fetch_assoc()) {
+                        ?>
                            <tr>
-                              <td align='center'><?php echo $nomor++; ?> </td>
+                              <td align='center'><?php echo $nomor++; ?></td>
                               <!-- <td><?php echo $pecah['invoice']; ?></td> -->
                               <td><?php echo $pecah['tanggal_transaksi']; ?></td>
                               <td style='width: 12%'><?php echo $pecah['nama']; ?></td>
@@ -50,12 +59,18 @@
                               <td style='width: 12%'>Rp. <?php echo number_format($pecah['grandtotal'], 0, ".", "."); ?></td>
                               <td align="center" style='width: 15%'>
                                  <a href="" id="<?php echo $pecah['transaksi_id']; ?>" data-toggle='modal' data-target='#detail-transaksi' class='transdet btn btn-secondary btn-xs'>
-                                    <i class='fas fa-eye'></i> Detail</a>
-                                 <a href='faktur.php?id=<?php echo  $pecah['transaksi_id']; ?>' target="_blank" class='btn btn-primary btn-xs'><i class='fas fa-print'></i> Print</a>
-                                 <a href='index.php?page=hapustransaksidetail&id=<?php echo  $pecah['transaksi_id']; ?>' target="_blank" class='btn btn-danger btn-xs'><i class='fas fa-trash'></i> Hapus</a>
+                                    <i class='fas fa-eye'></i> Detail
+                                 </a>
+                                 <a href='faktur.php?id=<?php echo  $pecah['transaksi_id']; ?>' target="_blank" class='btn btn-primary btn-xs'>
+                                    <i class='fas fa-print'></i> Print
+                                 </a>
+                                 <a href='index.php?page=hapustransaksidetail&id=<?php echo  $pecah['transaksi_id']; ?>' target="_blank" class='btn btn-danger btn-xs'>
+                                    <i class='fas fa-trash'></i> Hapus
+                                 </a>
                               </td>
                            </tr>
-                        <?php }; ?>
+                        <?php } ?>
+
                      </tbody>
                   </table>
                </div>

@@ -135,7 +135,7 @@ if (isset($_POST["proses"])) {
                            </td>
                            <td>
                               <div class="form-group">
-                                 <input type="text" name="no_pelanggan" class="form-control">
+                                 <input type="number" name="no_pelanggan" class="form-control">
                                  <?php
                                  if (isset($_POST['proses'])) {
                                     echo $error_no;
@@ -237,26 +237,26 @@ if (isset($_POST["proses"])) {
                <div class="card card-warning card-outline">
                   <div class="card-body">
                      <?php
-                     // $today = date("dmyHis"); // yang di pake
-                     // $query = "SELECT max(invoice) AS voice FROM transaksi WHERE invoice LIKE '$today%'";
-                     // $hasil = $koneksi->query($query);
-                     // $data  = mysqli_fetch_array($hasil);
-                     // $lastNoTransaksi = $data['voice'];
-                     // // $lastNoUrut = substr($lastNoTransaksi, 12, 4);
-                     // // $nextNoUrut = $lastNoUrut + 1;
-                     // // $inisial = "AJ";
-                     // // $nextNoTransaksi = $inisial . $today . sprintf('%04s', $nextNoUrut);
-                     // $noUrut =  substr($lastNoTransaksi, 10, 4);
-                     // $nourutnext = $noUrut + 1;
-                     // $char = "AJ"; // yang di pake
-                     // $invoice = $char . $today; // yang di pake
+                     $today = date("dmyHis"); // yang di pake
+                     $query = "SELECT max(invoice) AS voice FROM transaksi WHERE invoice LIKE '$today%'";
+                     $hasil = $koneksi->query($query);
+                     $data  = mysqli_fetch_array($hasil);
+                     $lastNoTransaksi = $data['voice'];
+                     // $lastNoUrut = substr($lastNoTransaksi, 12, 4);
+                     // $nextNoUrut = $lastNoUrut + 1;
+                     // $inisial = "AJ";
+                     // $nextNoTransaksi = $inisial . $today . sprintf('%04s', $nextNoUrut);
+                     $noUrut =  substr($lastNoTransaksi, 10, 4);
+                     $nourutnext = (int) $noUrut +  1;
+                     $char = "AJ"; // yang di pake
+                     $invoice = $char . $today; // yang di pake
                      ?>
                      <div align="right">
-                        <!-- <h5>Invoice
+                        <h5>Invoice
                            <div class="form-group">
                               <input readonly name="invoice" class="form-control" type="text" value="<?php echo $invoice; ?>" style="font-size: 18pt; text-align:right; border: 0 solid; outline: none; background: #fff; color: #000; font-weight: 700; width:100%; padding:0">
                            </div>
-                        </h5> -->
+                        </h5>
                         <h5>Total Pembelian</h5>
                         <h1>
                            <div class="form-group">
